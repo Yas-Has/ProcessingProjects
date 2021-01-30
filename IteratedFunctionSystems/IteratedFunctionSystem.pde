@@ -12,7 +12,8 @@ class IteratedFunctionSystem{
     Coordinate current = new Coordinate(start.x, start.y);
     float r;
     float total;
-    int tIndex;
+    int tIndex = -1;
+    AffineTransformation t;
     for(int i = 0; i < iterations; i++){
       r = random(1);
       total = 0;
@@ -22,9 +23,16 @@ class IteratedFunctionSystem{
           tIndex = j;
           break;
         }
+        
       }
-      tIndex  = probabilities.length - 1;
+      if(tIndex == -1){
+        tIndex  = probabilities.length - 1;
+      }
+      t = transformations[tIndex];
+      current = t.apply(current);
+      points.add(current.copy());
     }
+    return points;
   }
 
 }
